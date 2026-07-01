@@ -25,6 +25,8 @@ builder.Services.AddSingleton<VectorSearchService>();
 
 builder.Services.AddScoped<RagQueryService>();
 
+builder.Services.AddScoped<LegislationSeederService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
