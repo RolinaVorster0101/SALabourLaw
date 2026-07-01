@@ -19,6 +19,8 @@ builder.Services.AddSingleton(new SearchIndexClient(
 
 builder.Services.AddSingleton<ChunkingService>();
 
+builder.Services.AddSingleton<EmbeddingService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
