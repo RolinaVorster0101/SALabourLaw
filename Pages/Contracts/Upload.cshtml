@@ -1,0 +1,57 @@
+@page
+@model SALabourLaw.Pages.Contracts.UploadModel
+@{
+    ViewData["Title"] = "Upload Contract";
+}
+
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="chat-header">
+        <h1>Contract Review</h1>
+        <p>Upload your employment contract (PDF or text file) to check it against South African labour legislation.</p>
+    </div>
+
+    <div class="disclaimer">
+        <strong>Privacy notice.</strong> Your contract is processed for this session only and is not stored permanently.
+        Session data is deleted automatically after 30 minutes of inactivity.
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="disclaimer" style="border-left-color: var(--color-error); color: var(--color-error); background-color: #FEF2F2;">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <div class="card mt-lg">
+        <div class="card-title">Upload your contract</div>
+        <div class="card-body mb-lg">Accepted formats: PDF, TXT. Maximum file size: 10MB.</div>
+
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label class="form-label" for="contractFile">Select file</label>
+                <input type="file"
+                       id="contractFile"
+                       name="contractFile"
+                       class="form-control"
+                       accept=".pdf,.txt"
+                       required />
+            </div>
+            <button type="submit" class="btn btn-primary" id="uploadBtn">
+                Upload and Analyse
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const form = document.getElementById('uploadForm');
+        const btn = document.getElementById('uploadBtn');
+
+        form.addEventListener('submit', () => {
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+        });
+    </script>
+}

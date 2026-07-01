@@ -1,0 +1,86 @@
+@page
+@model SALabourLaw.Pages.Contracts.ReviewModel
+@{
+    ViewData["Title"] = "Contract Review";
+}
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h1>Contract Review</h1>
+        <p>Ask questions about your contract. Answers compare your contract clauses against the BCEA, LRA, and CCMA guidance.</p>
+    </div>
+
+    <div class="disclaimer">
+        <strong>Not legal advice.</strong> This tool highlights potential compliance issues for informational purposes only.
+        Consult a qualified labour attorney for advice specific to your situation.
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+        @if (!Model.Messages.Any())
+        {
+            <div class="chat-message assistant">
+                <span class="message-label">Assistant</span>
+                <div class="message-bubble">
+                    Your contract has been uploaded and analysed. You can now ask me questions like:
+                    <br><br>
+                    &ldquo;Does my notice period comply with the BCEA?&rdquo;<br>
+                    &ldquo;Are my leave entitlements correct?&rdquo;<br>
+                    &ldquo;Is my probation period legally compliant?&rdquo;
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var message in Model.Messages)
+            {
+                <div class="chat-message @message.Role">
+                    <span class="message-label">@(message.Role == "user" ? "You" : "Assistant")</span>
+                    <div class="message-bubble">@Html.Raw(message.Content.Replace("\n", "<br>"))</div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="chat-input-area">
+        <form method="post" id="chatForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="sessionId" value="@Model.SessionId" />
+            <div class="chat-input-row">
+                <textarea name="question"
+                          id="questionInput"
+                          class="chat-input"
+                          placeholder="Ask about your contract compliance..."
+                          rows="1"
+                          required></textarea>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const form = document.getElementById('chatForm');
+        const input = document.getElementById('questionInput');
+        const messages = document.getElementById('chatMessages');
+        const submitBtn = document.getElementById('submitBtn');
+
+        input.addEventListener('input', () => autoResize(input));
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                form.submit();
+            }
+        });
+
+        form.addEventListener('submit', () => {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            showTypingIndicator(messages);
+            scrollToBottom(messages);
+        });
+
+        scrollToBottom(messages);
+    </script>
+}

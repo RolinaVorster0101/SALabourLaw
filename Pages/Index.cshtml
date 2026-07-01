@@ -1,10 +1,83 @@
 ﻿@page
-@model IndexModel
+@model SALabourLaw.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div style="max-width: 860px; margin: 0 auto;">
+
+    <div class="hero">
+        <div class="hero-dots"></div>
+        <div class="hero-inner">
+            <div class="eyebrow">
+                <div class="eyebrow-dot"></div>
+                Grounded in BCEA &middot; LRA &middot; CCMA
+            </div>
+            <h1 style="font-size: 2.2rem; margin-bottom: var(--spacing-md);">
+                SA Labour Law <span style="color: var(--color-accent);">&amp; Contract<br>Compliance Assistant</span>
+            </h1>
+            <p style="font-size: var(--font-size-lg); color: var(--color-text-secondary); margin-bottom: var(--spacing-lg);">
+                Understand your rights and obligations under South African employment law — every answer grounded in the actual legislation.
+            </p>
+            <div class="disclaimer">
+                <strong>Not legal advice.</strong> This tool provides information based on South African labour legislation.
+                Always consult a qualified labour attorney for advice specific to your situation.
+            </div>
+        </div>
+    </div>
+
+    <div class="home-grid">
+        <div class="card featured">
+            <div class="card-label">Primary mode</div>
+            <div class="card-title">Legislation Q&amp;A</div>
+            <div class="accent-divider"></div>
+            <div class="card-body" style="margin-bottom: var(--spacing-md);">
+                Ask questions directly against the BCEA, LRA, and CCMA guidance.
+                Get cited answers grounded in the actual legislation.
+            </div>
+            <div class="card-examples">
+                &ldquo;How much notice is required to terminate employment?&rdquo;<br>
+                &ldquo;What are the rules around Sunday pay?&rdquo;<br>
+                &ldquo;How many days of annual leave am I entitled to?&rdquo;
+            </div>
+            <a href="/Ask" class="btn btn-primary">Ask a question</a>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Contract mode</div>
+            <div class="card-title">Contract Review</div>
+            <div class="accent-divider"></div>
+            <div class="card-body" style="margin-bottom: var(--spacing-md);">
+                Upload your employment contract and check whether its clauses comply with South African labour legislation.
+            </div>
+            <div class="card-examples">
+                &ldquo;Does my notice period comply with the BCEA?&rdquo;<br>
+                &ldquo;Are my leave entitlements correct?&rdquo;<br>
+                &ldquo;Is my probation period legally compliant?&rdquo;
+            </div>
+            <a href="/Contracts/Upload" class="btn btn-outline">Upload contract</a>
+        </div>
+    </div>
+
+    <div class="card leg-grid-card">
+        <div class="card-title">Legislation covered</div>
+        <div class="leg-grid">
+            <div>
+                <div class="leg-item-label">BCEA</div>
+                <div class="leg-item-name">Basic Conditions of Employment Act</div>
+                <div class="leg-item-desc">Working hours, leave entitlements, notice periods, and minimum employment conditions.</div>
+            </div>
+            <div>
+                <div class="leg-item-label">LRA</div>
+                <div class="leg-item-name">Labour Relations Act</div>
+                <div class="leg-item-desc">Unfair dismissal, strikes, trade unions, collective bargaining, and dispute resolution.</div>
+            </div>
+            <div>
+                <div class="leg-item-label">CCMA</div>
+                <div class="leg-item-name">CCMA Guidance</div>
+                <div class="leg-item-desc">Conciliation, arbitration, how to refer a dispute, and commissioner guidelines.</div>
+            </div>
+        </div>
+    </div>
+
 </div>

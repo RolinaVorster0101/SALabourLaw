@@ -538,3 +538,163 @@ footer {
 .mb-lg {
     margin-bottom: var(--spacing-lg);
 }
+
+/* =========================================
+   Nav accent line
+   ========================================= */
+.nav {
+    border-bottom: 3px solid var(--color-accent);
+}
+
+/* =========================================
+   Hero section
+   ========================================= */
+.hero {
+    padding: var(--spacing-2xl) 0 var(--spacing-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-dots {
+    position: absolute;
+    top: 0;
+    left: -40px;
+    right: -40px;
+    bottom: 0;
+    background-image: radial-gradient(circle, #1B2A4A18 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+}
+
+.hero-inner {
+    position: relative;
+    max-width: 560px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #EEF2FF;
+    border: 0.5px solid rgba(201, 168, 76, 0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    animation: fadeInUp 0.4s ease both;
+}
+
+.eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+}
+
+.hero h1 {
+    animation: fadeInUp 0.4s ease 0.1s both;
+}
+
+.hero p {
+    animation: fadeInUp 0.4s ease 0.2s both;
+}
+
+.hero .disclaimer {
+    animation: fadeInUp 0.4s ease 0.3s both;
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    max-width: 480px;
+}
+
+/* =========================================
+   Accent divider
+   ========================================= */
+.accent-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--color-accent);
+    margin: var(--spacing-sm) 0 var(--spacing-md);
+}
+
+/* =========================================
+   Home grid — asymmetric
+   ========================================= */
+.home-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card.featured {
+    border-top: 3px solid var(--color-primary);
+}
+
+.card-label {
+    font-size: 11px;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-examples {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* =========================================
+   Legislation covered section
+   ========================================= */
+.leg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+}
+
+.leg-item-label {
+    font-size: 48px;
+    font-weight: var(--font-weight-bold);
+    color: rgba(27, 42, 74, 0.06);
+    line-height: 1;
+    margin-bottom: -8px;
+}
+
+.leg-item-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.leg-item-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* =========================================
+   Card entrance animations
+   ========================================= */
+.card {
+    animation: fadeInUp 0.4s ease both;
+}
+
+.home-grid .card:nth-child(1) {
+    animation-delay: 0.15s;
+}
+
+.home-grid .card:nth-child(2) {
+    animation-delay: 0.25s;
+}
+
+.leg-grid-card {
+    animation-delay: 0.35s;
+}
