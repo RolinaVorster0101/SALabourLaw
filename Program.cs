@@ -1,6 +1,7 @@
 using Azure;
 using Azure.AI.OpenAI;
 using Azure.Search.Documents.Indexes;
+using SALabourLaw.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddSingleton(new AzureOpenAIClient(
 builder.Services.AddSingleton(new SearchIndexClient(
     new Uri(builder.Configuration["AzureSearch:Endpoint"]!),
     new AzureKeyCredential(builder.Configuration["AzureSearch:ApiKey"]!)));
+
+builder.Services.AddSingleton<ChunkingService>();
 
 var app = builder.Build();
 
