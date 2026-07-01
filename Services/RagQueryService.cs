@@ -1,6 +1,7 @@
 using Azure.AI.OpenAI;
 using OpenAI.Chat;
 using SALabourLaw.Models;
+using OAIChatMessage = OpenAI.Chat.ChatMessage;
 
 namespace SALabourLaw.Services;
 
@@ -33,7 +34,7 @@ public class RagQueryService
         var context = BuildLegislationContext(chunks);
         var prompt = BuildLegislationPrompt(question, context);
 
-        var response = await _chatClient.CompleteChatAsync(new List<ChatMessage>
+        var response = await _chatClient.CompleteChatAsync(new List<OAIChatMessage>
 {
     new SystemChatMessage(@"You are a South African employment law assistant. 
         Answer questions using only the legislative excerpts provided. 
@@ -59,7 +60,7 @@ public class RagQueryService
         var context = BuildDualContext(legislationChunks, contractChunks);
         var prompt = BuildContractPrompt(question, context);
 
-        var response = await _chatClient.CompleteChatAsync(new List<ChatMessage>
+        var response = await _chatClient.CompleteChatAsync(new List<OAIChatMessage>
 {
     new SystemChatMessage(@"You are a South African employment law compliance assistant.
         You will be given excerpts from both an employment contract and relevant legislation (BCEA, LRA, CCMA guidance).

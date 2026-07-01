@@ -1,0 +1,83 @@
+@page
+@model SALabourLaw.Pages.Ask.IndexModel
+@{
+    ViewData["Title"] = "Legislation Q&A";
+}
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h1>Legislation Q&amp;A</h1>
+        <p>Ask questions about the BCEA, LRA, and CCMA guidance. Answers are grounded in the legislation with citations.</p>
+    </div>
+
+    <div class="disclaimer">
+        <strong>Not legal advice.</strong> This tool provides information based on South African labour legislation.
+        Consult a qualified labour attorney for advice specific to your situation.
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+        @if (!Model.Messages.Any())
+        {
+            <div class="chat-message assistant">
+                <span class="message-label">Assistant</span>
+                <div class="message-bubble">
+                    Hello! I can answer questions about South African labour law — the Basic Conditions of Employment Act (BCEA),
+                    the Labour Relations Act (LRA), and CCMA guidance. What would you like to know?
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var message in Model.Messages)
+            {
+                <div class="chat-message @message.Role">
+                    <span class="message-label">@(message.Role == "user" ? "You" : "Assistant")</span>
+                    <div class="message-bubble">@Html.Raw(message.Content.Replace("\n", "<br>"))</div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="chat-input-area">
+        <form method="post" id="chatForm">
+            @Html.AntiForgeryToken()
+            <div class="chat-input-row">
+                <textarea name="question"
+                          id="questionInput"
+                          class="chat-input"
+                          placeholder="Ask about notice periods, leave entitlements, dismissal procedures..."
+                          rows="1"
+                          required></textarea>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const form = document.getElementById('chatForm');
+        const input = document.getElementById('questionInput');
+        const messages = document.getElementById('chatMessages');
+        const submitBtn = document.getElementById('submitBtn');
+
+        input.addEventListener('input', () => autoResize(input));
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                form.submit();
+            }
+        });
+
+        form.addEventListener('submit', () => {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            showTypingIndicator(messages);
+            scrollToBottom(messages);
+        });
+
+        // Scroll to bottom on load if there are messages
+        scrollToBottom(messages);
+    </script>
+}
