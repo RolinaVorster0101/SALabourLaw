@@ -23,6 +23,8 @@ builder.Services.AddSingleton<EmbeddingService>();
 
 builder.Services.AddSingleton<VectorSearchService>();
 
+builder.Services.AddScoped<RagQueryService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
