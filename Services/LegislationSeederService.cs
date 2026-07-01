@@ -1,4 +1,5 @@
 using SALabourLaw.Models;
+using UglyToad.PdfPig;
 
 namespace SALabourLaw.Services;
 
@@ -31,8 +32,16 @@ public class LegislationSeederService
 
         _logger.LogInformation("Seeding {SourceAct} from {FilePath}", sourceAct, filePath);
 
-        var text = await File.ReadAllTextAsync(filePath);
+        var text = ExtractTextFromPdf(filePath);
+
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            _logger.LogWarning("No text extracted from {FilePath}", filePath);
+            return;
+        }
+
         var chunks = _chunkingService.ChunkTextWithIndex(text);
+        _logger.LogInformation("Created {ChunkCount} chunks for {SourceAct}", chunks.Count, sourceAct);
 
         for (int i = 0; i < chunks.Count; i++)
         {
@@ -42,7 +51,7 @@ public class LegislationSeederService
 
             var chunk = new LegislationChunk
             {
-                Id = $"{sourceAct.ToLower()}-chunk-{chunkIndex}",
+                Id = $"{sourceAct.ToLower().Replace(" ", "-")}-chunk-{chunkIndex}",
                 Content = chunkText,
                 ContentVector = vector,
                 SourceAct = sourceAct,
@@ -58,5 +67,18 @@ public class LegislationSeederService
         }
 
         _logger.LogInformation("Completed seeding {SourceAct}", sourceAct);
+    }
+
+    private string ExtractTextFromPdf(string filePath)
+    {
+        var sb = new System.Text.StringBuilder();
+
+        using var document = PdfDocument.Open(filePath);
+        foreach (var page in document.GetPages())
+        {
+            sb.AppendLine(page.Text);
+        }
+
+        return sb.ToString();
     }
 }

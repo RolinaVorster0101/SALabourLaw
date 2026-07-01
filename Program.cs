@@ -2,6 +2,7 @@ using Azure;
 using Azure.AI.OpenAI;
 using Azure.Search.Documents.Indexes;
 using SALabourLaw.Services;
+using SALabourLaw.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,5 +49,25 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
 app.MapRazorPages();
+
+if (app.Environment.IsDevelopment())
+{
+    var shouldSeed = app.Configuration.GetValue<bool>("SeedData:AutoSeedOnStartup");
+    if (shouldSeed)
+    {
+        using var scope = app.Services.CreateScope();
+        var seeder = scope.ServiceProvider.GetRequiredService<LegislationSeederService>();
+        var docs = app.Configuration.GetSection("SeedData:Documents")
+            .Get<List<SeedDocument>>();
+
+        if (docs != null)
+        {
+            foreach (var doc in docs)
+            {
+                await seeder.SeedAsync(doc.FilePath, doc.SourceAct);
+            }
+        }
+    }
+}
 
 app.Run();
