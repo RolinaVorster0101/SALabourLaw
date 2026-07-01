@@ -60,8 +60,7 @@ public class UploadModel : PageModel
             }
             else
             {
-                ErrorMessage = "PDF parsing will be added in the next update. Please upload a TXT file for now.";
-                return Page();
+                text = ExtractTextFromPdf(contractFile);
             }
 
             var chunks = _chunkingService.ChunkTextWithIndex(text);
@@ -92,5 +91,20 @@ public class UploadModel : PageModel
             ErrorMessage = "An error occurred while processing your file. Please try again.";
             return Page();
         }
+    }
+
+    private string ExtractTextFromPdf(IFormFile file)
+    {
+        var sb = new System.Text.StringBuilder();
+
+        using var stream = file.OpenReadStream();
+        using var document = UglyToad.PdfPig.PdfDocument.Open(stream);
+
+        foreach (var page in document.GetPages())
+        {
+            sb.AppendLine(page.Text);
+        }
+
+        return sb.ToString();
     }
 }
