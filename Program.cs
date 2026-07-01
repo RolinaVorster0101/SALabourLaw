@@ -21,6 +21,8 @@ builder.Services.AddSingleton<ChunkingService>();
 
 builder.Services.AddSingleton<EmbeddingService>();
 
+builder.Services.AddSingleton<VectorSearchService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
